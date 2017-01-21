@@ -10,12 +10,13 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Assignment1
 {
     public partial class SubscribeForm : Form
     {
         
-        SendViaEmail send2Email = new SendViaEmail("li@my.centennialcollege.ca");
+       
         Publisher publisher = new Publisher();
 
         ArrayList emails =new ArrayList();
@@ -54,6 +55,7 @@ namespace Assignment1
         {
             SendViaMobile send2Mobile = new SendViaMobile(textBox2.Text);
             SendViaEmail send2Email = new SendViaEmail(textBox1.Text);
+            //email checkbox
             if (checkBox1.Checked == true)
             {
                 // Check the email is already existed in the list, emails.
@@ -61,16 +63,32 @@ namespace Assignment1
                 {
                     if (x.Contains(textBox1.Text))
                     {
-                        
+                        MessageBox.Show("You have alredy subscribed for emails!");
                     }
                 }
                 // If not subcribe;
-                send2Email.Subscribe(publisher);
+               send2Email.Subscribe(publisher);
+                //add email to the email collection
+                emails.Add(textBox1.Text);
                 send2Email.sendEmail("You are subscribed.");
             }
-
+            //mobile checkbox
             if (checkBox2.Checked == true)
-            { send2Mobile.Subscribe(publisher); }
+            {
+                // mobile already existed
+                foreach (string x in emails)
+                {
+                    if (x.Contains(textBox1.Text))
+                    {
+                        MessageBox.Show("You have alredy subscribed for phone notification!");
+                    }
+                }
+                //if not subscribe
+                send2Mobile.Subscribe(publisher);
+                //add to phone collection
+                phones.Add(textBox2.Text);
+                send2Mobile.setMobile("You are subscribed.");
+            }
            
         }
 
